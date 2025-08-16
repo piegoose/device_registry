@@ -1,0 +1,19 @@
+current directory: /Users/jedrek/RubymineProjects/device_registry/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.1/ext/stringio
+/Users/jedrek/.rbenv/versions/3.2.3/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/jedrek/RubymineProjects/device_registry/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250814-45411-yc8xmw sitelibdir\=./.gem.20250814-45411-yc8xmw clean
+
+current directory: /Users/jedrek/RubymineProjects/device_registry/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250814-45411-yc8xmw sitelibdir\=./.gem.20250814-45411-yc8xmw
+compiling stringio.c
+linking shared-object stringio.bundle
+ld: warning: ignoring duplicate libraries: '-lruby.3.2'
+
+current directory: /Users/jedrek/RubymineProjects/device_registry/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250814-45411-yc8xmw sitelibdir\=./.gem.20250814-45411-yc8xmw install
+/usr/bin/install -c -m 0755 stringio.bundle ./.gem.20250814-45411-yc8xmw
+
+current directory: /Users/jedrek/RubymineProjects/device_registry/vendor/bundle/ruby/3.2.0/gems/stringio-3.1.1/ext/stringio
+make DESTDIR\= sitearchdir\=./.gem.20250814-45411-yc8xmw sitelibdir\=./.gem.20250814-45411-yc8xmw clean
