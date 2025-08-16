@@ -1,0 +1,33 @@
+# Bundler
+/.bundle
+/vendor/bundle
+
+# Logs
+/log/*
+!/log/.keep
+
+# Temporary files
+/tmp/*
+!/tmp/.keep
+
+# SQLite databases
+/db/*.sqlite3
+/db/*.sqlite3-*
+/storage/*.sqlite3
+/storage/*.sqlite3-*
+
+# Byebug history
+.byebug_history
+
+# IDE / Editor files
+/.idea
+*.iml
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Node.js (jeśli używasz Webpackera)
+node_modules/
+yarn-error.log
