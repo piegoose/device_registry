@@ -1,5 +1,4 @@
 module AssigningError
-  class AlreadyUsedOnOtherUser    < StandardError; end
-  class AlreadyAssignedToOther    < StandardError; end
-  class AlreadyReturnedByThisUser < StandardError; end
+  class AlreadyUsedOnOtherUser < StandardError; end
+  class AlreadyUsedOnUser      < StandardError; end
 end
