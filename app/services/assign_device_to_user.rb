@@ -1,45 +1,33 @@
-# frozen_string_literal: true
-
+# app/services/assign_device_to_user.rb
 class AssignDeviceToUser
-  # Specs call from user:, serial_number:, and sometimes target_user:
-  # - user:        who performs the operation
-  # - target_user: who we assign it to (must be the same as user)
-  # - serial_number: device identifier
-  def initialize(user:, serial_number:, target_user: nil)
+  def initialize(user, serial_number, target_user = nil)
     @current_user  = user
     @target_user   = target_user || user
     @serial_number = serial_number
   end
 
   def call
-    # 1) The user can only assign the device to themselves.
-    raise RegistrationError::Unauthorized if current_user.id != target_user.id
-
-    device = Device.find_or_create_by!(serial_number: serial_number)
-
-    # 2) If the device is currently with another user → lock
-    open_assignment = DeviceAssignment.open.find_by(device: device)
-    if open_assignment && open_assignment.user_id != current_user.id
-      raise AssigningError::AlreadyUsedOnOtherUser
+    # 1. User cannot assign device to another user
+    if @current_user != @target_user
+      raise RegistrationError::Unauthorized
     end
 
-    # 3) If this user has ever returned the same device → permanent ban on re-assignment
-    if DeviceAssignment.closed.exists?(user: current_user, device: device)
-      raise AssigningError::AlreadyReturnedByThisUser
+    device = Device.find_or_create_by!(serial_number: @serial_number)
+
+    # 2. If device is already assigned and not returned
+    if DeviceAssignment.exists?(device: device, returned_at: nil)
+      existing_assignment = DeviceAssignment.find_by(device: device, returned_at: nil)
+      if existing_assignment.user != @target_user
+        raise AssigningError::AlreadyUsedOnOtherUser
+      end
     end
 
-    # 4) We create a new open assignment (history in DeviceAssignment)
-    DeviceAssignment.create!(
-      user: current_user,
-      device: device,
-      assigned_at: Time.current
-    )
+    # 3. If already used & returned by same user
+    if DeviceAssignment.where(device: device, user: @target_user).where.not(returned_at: nil).any?
+      raise AssigningError::AlreadyUsedOnUser
+    end
 
-    device
+    # 4. Otherwise create assignment
+    DeviceAssignment.create!(device: device, user: @target_user)
   end
-
-  private
-
-  attr_reader :current_user, :target_user, :serial_number
 end
-
