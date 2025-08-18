@@ -1,24 +1,41 @@
-# README
-
-Your task is to implement the part of the application that helps track devices assigned to users within an organization.
-
-For now, we have two ActiveRecord models: User and Device.
-User can have many devices; the device should be active only for one assigned user.
-There are 2 actions a User can take with the Device: assign the device to User or return the Device.
-
-Here are the product requirements:
-- User can assign the device only to themself. 
-- User can't assign the device already assigned to another user.
-- Only the user who assigned the device can return it. 
-- If the user returned the device in the past, they can't ever re-assign the same device to themself.
+Project Status
+✅ Setup done
+✅ Models & relations implemented
+✅ Custom error handling added
+⚠️ Business logic partially working (tests failing for AssignDeviceToUser)
 
 
-TODO:
- - Clone this repo to your local machine - DON'T FORK IT.
- - Fix the config, so you can run the test suite properly.
- - Implement the code to make the tests pass for `AssignDeviceToUser` service.
- - Following the product requirements listed above, implement tests for returning the device and then implement the code to make them pass.
- - In case you are missing additional product requirements, use your best judgment. Have fun with it.
- - Refactor at will. Do you see something you don't like? Change it. It's your code. Remember to satisfy the outlined product requirements though.
- - Remember to document your progress using granular commits and meaningful commit messages.
- - Publish your code as a public repo using your Github account.
+
+
+## Features
+
+- **User authentication** with `has_secure_password`.
+- **Devices management** with assignment and return logic.
+- **Business logic services**:
+    - `AssignDeviceToUser` – allows a user to assign a device to themselves,  
+      raises custom errors if device is already assigned or used incorrectly.
+    - `ReturnDeviceFromUser` – allows a user to return a device.
+- **Custom error classes** under `app/errors/` to handle specific validation cases.
+- **RSpec tests** for controllers, models and services (partially failing).
+
+## Known Issues
+
+- Some specs for `AssignDeviceToUser` service are still failing due to  
+  mismatched service initialization (`ArgumentError: missing keyword :user`).
+- Needs further refactoring to fully align with test suite expectations.
+
+## How to Run
+
+1. Ensure Ruby and Bundler are installed.  
+   Recommended Ruby version: `3.2.x`
+
+2. Install dependencies:
+   ```bash
+   bundle install
+3. Prepare database
+RAILS_ENV=development bin/rails db:setup
+RAILS_ENV=test bin/rails db:drop db:create db:schema:load
+4. Run the test suite
+   bundle exec rspec
+
+
